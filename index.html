@@ -193,7 +193,52 @@
       background: rgba(212, 163, 89, 0.15);
     }
 
-/* KHUNG HIỂN THỊ HÌNH ẢNH MINH HỌA */
+    /* HIỆU ỨNG BONG BÓNG NỔI TOÀN MÀN HÌNH NỀN */
+    .bubbles-background {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1; /* Nằm dưới ảnh và hộp thoại */
+      overflow: hidden;
+    }
+
+    .bubble {
+      position: absolute;
+      bottom: -30px;
+      left: var(--left, 50%);
+      width: var(--size, 12px);
+      height: var(--size, 12px);
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.8), rgba(135, 206, 250, 0.3) 60%, rgba(255, 255, 255, 0.05));
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 0 10px rgba(135, 206, 250, 0.5), inset 0 0 4px rgba(255, 255, 255, 0.6);
+      animation: floatFullBg var(--dur, 6s) ease-in infinite;
+      animation-delay: var(--delay, 0s);
+      opacity: 0;
+    }
+
+    @keyframes floatFullBg {
+      0% {
+        transform: translateY(0) translateX(0) scale(0.6);
+        opacity: 0;
+      }
+      15% {
+        opacity: 0.75;
+      }
+      50% {
+        transform: translateY(-50vh) translateX(15px) scale(1);
+      }
+      80% {
+        transform: translateY(-80vh) translateX(-12px) scale(1.05);
+        opacity: 0.65;
+      }
+      100% {
+        transform: translateY(-110vh) translateX(10px) scale(1.15);
+        opacity: 0;
+      }
+    }
+
+    /* KHUNG HIỂN THỊ HÌNH ẢNH MINH HỌA */
     .stage {
       position: absolute;
       top: 70px;
@@ -204,7 +249,7 @@
       align-items: flex-end;
       padding: 0 8%;
       pointer-events: none;
-      z-index: 1;
+      z-index: 2;
     }
 
     /* MẶC ĐỊNH CHO CÁC CẢNH CÒN LẠI (finalChoice, ending_*): NẰM CHÍNH GIỮA */
@@ -233,32 +278,13 @@
       margin-right: 0;
     }
 
-    /* TRÊN ĐIỆN THOẠI (DƯỚI 768px): TẤT CẢ LUÔN Ở GIỮA */
-    @media (max-width: 768px) {
-      .stage {
-        top: 60px;
-        bottom: 52%;
-        padding: 0;
-        justify-content: center;
-        align-items: center;
-      }
-      .character-portrait,
-      .stage.align-left .character-portrait,
-      .stage.align-right .character-portrait {
-        margin: 0 auto !important;
-        max-width: 82%;
-        max-height: 90%;
-        height: auto;
-      }
-    }
-
     /* HỘP THOẠI DIALOGUE DƯỚI CÙNG */
     .dialogue-wrapper {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      height: 320px; /* Tăng chiều cao lên 320px để chứa hết văn bản dài */
+      height: 320px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -268,33 +294,6 @@
       backdrop-filter: blur(14px);
       z-index: 20;
       cursor: pointer;
-    }
-
-    /* VÙNG CHỨA CHỮ: BỎ THANH CUỘN CHUỘT */
-    .dialogue-text {
-      color: var(--text);
-      font-size: 1.05rem;
-      line-height: 1.6;
-      font-weight: 400;
-      overflow-y: hidden; /* Tắt thanh cuộn chuột hoàn toàn */
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center; /* Căn nội dung cân đối ở giữa hộp thoại khi ít chữ */
-    }
-
-    .dialogue-text p { 
-      margin-bottom: 8px; 
-    }
-
-    .dialogue-text .dialogue {
-      border-left: 3px solid var(--gold);
-      margin: 8px 0;
-      color: #f6e8cc;
-      background: rgba(212, 163, 89, 0.05);
-      border-radius: 0 8px 8px 0;
-      padding: 8px 12px;
-      font-size: 0.98em;
     }
 
     .char-badge {
@@ -317,21 +316,28 @@
       padding: 2px 8px;
       border-radius: 99px;
     }
+
+    /* VÙNG CHỨA CHỮ: BỎ THANH CUỘN CHUỘT TRÊN PC */
     .dialogue-text {
       color: var(--text);
-      font-size: clamp(0.95rem, 2.3vw, 1.1rem);
+      font-size: clamp(0.95rem, 2.3vw, 1.05rem);
       line-height: 1.6;
       font-weight: 400;
+      overflow-y: hidden;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
-    .dialogue-text p { margin-bottom: 6px; }
+    .dialogue-text p { margin-bottom: 8px; }
     .dialogue-text .dialogue {
       border-left: 3px solid var(--gold);
       margin: 8px 0;
       color: #f6e8cc;
       background: rgba(212, 163, 89, 0.05);
       border-radius: 0 8px 8px 0;
-      padding: 6px 10px;
-      font-size: 0.95em;
+      padding: 8px 12px;
+      font-size: 0.98em;
     }
 
     .dialogue-footer {
@@ -408,7 +414,7 @@
 
     .hidden { display: none !important; }
 
-  /* CẤU HÌNH DÀNH RIÊNG CHO ĐIỆN THOẠI (DƯỚI 768px) */
+    /* CẤU HÌNH DÀNH RIÊNG CHO ĐIỆN THOẠI (DƯỚI 768px) */
     @media (max-width: 768px) {
       .vn-container {
         border-radius: 0;
@@ -416,7 +422,6 @@
         height: 100dvh;
       }
 
-      /* Thanh menu trên cùng: lề sát hơn, chữ gọn gàng */
       .top-bar {
         padding: 10px 12px;
         align-items: center;
@@ -439,29 +444,28 @@
         font-size: 0.7rem; 
       }
 
-      /* KHU VỰC ẢNH: Chiếm trọn nửa trên từ sau top-bar tới sát hộp thoại */
+      /* KHU VỰC ẢNH TRÊN DI ĐỘNG */
       .stage {
-        top: 75px;        /* Cách top-bar không bị đè */
-        bottom: 46%;      /* Đáy ảnh bám sát mép trên hộp thoại */
+        top: 75px;
+        bottom: 46%;
         padding: 8px 16px 12px 16px;
         justify-content: center !important;
         align-items: center;
       }
 
-      /* ẢNH MINH HỌA: To, rõ, tỉ lệ 4:3 đẹp mắt */
       .character-portrait,
       .stage.align-left .character-portrait,
       .stage.align-right .character-portrait {
         margin: 0 auto !important;
         width: 100%;
-        max-width: 320px;   /* Chiều rộng lý tưởng cho màn hình điện thoại */
+        max-width: 320px;
         height: 100%;
-        max-height: 230px;  /* Đủ lớn, không bị co bé thành con tem */
+        max-height: 230px;
         object-fit: cover;
         border-radius: 12px;
       }
 
-      /* HỘP THOẠI DƯỚI CÙNG: Chiếm 46% màn hình dưới, vừa vặn ngón cái */
+      /* HỘP THOẠI DƯỚI CÙNG TRÊN DI ĐỘNG */
       .dialogue-wrapper {
         height: 46%;
         padding: 14px 16px 16px 16px;
@@ -478,8 +482,8 @@
       .dialogue-text {
         font-size: 0.95rem;
         line-height: 1.55;
-        overflow-y: auto;   /* Nếu gặp đoạn mở đầu dài thì vuốt nhẹ đọc tiếp */
-        justify-content: flex-start; /* Chữ bắt đầu từ trên xuống */
+        overflow-y: auto;
+        justify-content: flex-start;
       }
       .dialogue-text p {
         margin-bottom: 6px;
@@ -534,7 +538,20 @@
       </div>
     </header>
 
-    <!-- KHUNG ẢNH MINH HỌA -->
+    <!-- 1. HIỆU ỨNG BỌT NƯỚC NỔI TOÀN MÀN HÌNH NỀN -->
+    <div class="bubbles-background">
+      <span class="bubble" style="--left: 8%;  --size: 14px; --dur: 6.2s; --delay: 0s;"></span>
+      <span class="bubble" style="--left: 20%; --size: 8px;  --dur: 5.5s; --delay: 1.8s;"></span>
+      <span class="bubble" style="--left: 35%; --size: 22px; --dur: 7.1s; --delay: 0.6s;"></span>
+      <span class="bubble" style="--left: 50%; --size: 12px; --dur: 5.8s; --delay: 2.5s;"></span>
+      <span class="bubble" style="--left: 65%; --size: 18px; --dur: 6.6s; --delay: 1.1s;"></span>
+      <span class="bubble" style="--left: 80%; --size: 10px; --dur: 5.2s; --delay: 3.2s;"></span>
+      <span class="bubble" style="--left: 92%; --size: 16px; --dur: 6.8s; --delay: 2.1s;"></span>
+      <span class="bubble" style="--left: 28%; --size: 15px; --dur: 7.5s; --delay: 3.8s;"></span>
+      <span class="bubble" style="--left: 72%; --size: 9px;  --dur: 4.9s; --delay: 0.9s;"></span>
+    </div>
+
+    <!-- 2. KHUNG ẢNH MINH HỌA -->
     <div class="stage">
       <img id="char-img" class="character-portrait" src="./img/giao_than.png" alt="Minh họa">
     </div>
@@ -614,7 +631,7 @@
         ]
       },
       a1: {
-        stage: 2, chapter: "Giai đoạn 2 · Nhánh A", pill: "Đàm phán", speaker: "Giao Thần",
+        stage: 2, chapter: "Giai đoạn 2 · Nhánh A", pill: "Đàm phán", speaker: "Bích Châu",
         title: "Lời hứa trước biển cả",
         text: `<p>Bích Châu cúi đầu trước Giao thần nhưng vẫn giữ vững lập trường.</p><div class="dialogue"><p><strong>Bích Châu:</strong> “Con người đã mắc sai lầm, nhưng nếu ngài chỉ trừng phạt, nỗi oán giận sẽ ngày càng lớn. Xin hãy cho chúng con cơ hội sửa chữa.”</p><p><strong>Giao thần:</strong> “Lời hứa thì ai cũng có thể nói. Ngươi định làm gì để chứng minh?”</p></div><p>Bích Châu nhận ra mình cần đưa ra một giải pháp cụ thể.</p>`,
         choices: [
@@ -788,19 +805,22 @@
       const passage = passages[passageId];
 
       // Đổi ảnh hiển thị
-     const imgSrc = sceneImages[passageId] || sceneImages.start;
+      const imgSrc = sceneImages[passageId] || sceneImages.start;
       const charImg = document.getElementById("char-img");
       const stageEl = document.querySelector(".stage");
 
       charImg.src = imgSrc;
 
-      // Nếu cảnh này hiển thị ảnh Bích Châu thì chuyển sang bên trái
+      // Xóa các class vị trí cũ
       stageEl.classList.remove("align-left", "align-right");
-if (imgSrc.includes("bich_chau")) {
+
+      // Phân chia 3 vị trí
+      if (imgSrc.includes("bich_chau")) {
         stageEl.classList.add("align-left");   // Bích Châu: BÊN TRÁI
       } else if (imgSrc.includes("giao_than")) {
         stageEl.classList.add("align-right");  // Giao Thần: BÊN PHẢI
       }
+      // Các ảnh còn lại (finalChoice, ending_*) không gán class -> tự động căn CHÍNH GIỮA
 
       // Nội dung hội thoại
       document.getElementById("speaker-name").textContent = passage.speaker || "Giao Thần";
