@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#070605">
   <title>Bích Châu và Giao Thần</title>
   
@@ -25,6 +25,7 @@
     html, body {
       width: 100%;
       height: 100%;
+      height: 100dvh;
       background: #020406;
       display: flex;
       align-items: center;
@@ -33,12 +34,13 @@
       overflow: hidden;
     }
 
-    /* Khung màn hình game tỉ lệ chuẩn 16:9 */
+    /* Khung màn hình game thích ứng cả Desktop lẫn Mobile */
     .vn-container {
       position: relative;
       width: 100vw;
+      height: 100dvh;
       max-width: 1200px;
-      aspect-ratio: 16 / 10;
+      max-height: 850px;
       background: #081119;
       border: 1px solid var(--gold-dim);
       border-radius: 16px;
@@ -47,6 +49,13 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+    }
+
+    @media (min-width: 769px) {
+      .vn-container {
+        height: auto;
+        aspect-ratio: 16 / 10;
+      }
     }
 
     /* MÀN HÌNH KHỞI ĐỘNG (HERO) */
@@ -59,20 +68,20 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 40px;
+      padding: clamp(20px, 5vw, 40px);
       background: radial-gradient(circle at center, rgba(14, 38, 54, 0.95), rgba(4, 10, 16, 0.98));
     }
     .hero-eyebrow {
       color: var(--accent);
       text-transform: uppercase;
       letter-spacing: .25em;
-      font-size: 0.85rem;
+      font-size: clamp(0.7rem, 2vw, 0.85rem);
       font-weight: 700;
       margin-bottom: 12px;
     }
     .hero-title {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-size: clamp(2rem, 6vw, 3.8rem);
       line-height: 1.15;
       color: #fff;
       margin-bottom: 16px;
@@ -80,16 +89,16 @@
     .hero-desc {
       color: var(--text-muted);
       max-width: 600px;
-      font-size: 1.05rem;
+      font-size: clamp(0.9rem, 2.5vw, 1.05rem);
       line-height: 1.6;
-      margin-bottom: 30px;
+      margin-bottom: 26px;
     }
     .start-btn {
       background: linear-gradient(135deg, rgba(226, 189, 121, 0.25), rgba(226, 189, 121, 0.05));
       border: 1px solid var(--gold);
       color: var(--gold);
-      padding: 14px 40px;
-      font-size: 1.05rem;
+      padding: 12px 36px;
+      font-size: 1rem;
       font-weight: 600;
       border-radius: 99px;
       cursor: pointer;
@@ -109,43 +118,43 @@
       top: 0;
       left: 0;
       right: 0;
-      padding: 20px 24px;
+      padding: clamp(10px, 2.5vw, 20px);
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       z-index: 10;
       pointer-events: none;
+      gap: 8px;
     }
 
     /* Thẻ chỉ số bóng tròn (Pips) */
     .stats-card {
-      background: rgba(8, 16, 24, 0.85);
+      background: rgba(8, 16, 24, 0.88);
       border: 1px solid rgba(212, 163, 89, 0.25);
       border-radius: 12px;
-      padding: 10px 18px;
+      padding: 8px 14px;
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 6px;
       backdrop-filter: blur(10px);
       pointer-events: auto;
     }
     .stat-row {
       display: flex;
       align-items: center;
-      font-size: 0.84rem;
+      font-size: clamp(0.75rem, 2vw, 0.84rem);
       font-weight: 600;
-      gap: 16px;
-      width: 190px;
+      gap: 12px;
       justify-content: space-between;
     }
     .stat-name.trust { color: #facc15; }
     .stat-name.evidence { color: #38bdf8; }
     .stat-name.support { color: #4ade80; }
 
-    .dots { display: flex; gap: 5px; }
+    .dots { display: flex; gap: 4px; }
     .dot {
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.15);
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -155,25 +164,28 @@
     .dot.active-blue { background: #38bdf8; box-shadow: 0 0 8px #38bdf8; }
     .dot.active-green { background: #4ade80; box-shadow: 0 0 8px #4ade80; }
 
-    /* Thanh điều khiển hệ thống góc phải */
+    /* Thanh nút điều khiển */
     .control-actions {
       display: flex;
-      gap: 8px;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
       pointer-events: auto;
     }
     .ctrl-btn {
       background: rgba(10, 20, 30, 0.8);
       border: 1px solid rgba(255, 255, 255, 0.14);
       color: #cbd5e1;
-      padding: 7px 14px;
+      padding: 6px 10px;
       border-radius: 8px;
-      font-size: 0.82rem;
+      font-size: clamp(0.7rem, 1.8vw, 0.82rem);
       cursor: pointer;
       backdrop-filter: blur(8px);
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
       transition: all 0.2s ease;
+      white-space: nowrap;
     }
     .ctrl-btn:hover {
       border-color: var(--gold);
@@ -181,27 +193,63 @@
       background: rgba(212, 163, 89, 0.15);
     }
 
-    /* KHUNG HIỂN THỊ HÌNH ẢNH MINH HỌA ĐỘC LẬP */
+/* KHUNG HIỂN THỊ HÌNH ẢNH MINH HỌA */
     .stage {
       position: absolute;
-      inset: 0;
+      top: 70px;
+      left: 0;
+      right: 0;
+      bottom: 330px;
       display: flex;
-      justify-content: flex-end;
       align-items: flex-end;
-      padding-right: 20%;
-      padding-bottom: 330px;
+      padding: 0 8%;
       pointer-events: none;
       z-index: 1;
     }
+
+    /* MẶC ĐỊNH CHO CÁC CẢNH CÒN LẠI (finalChoice, ending_*): NẰM CHÍNH GIỮA */
     .character-portrait {
       width: auto;
-      max-width: 440px;
-      height: 330px;
+      max-width: 460px;
+      height: 100%;
+      max-height: 320px;
       object-fit: cover;
       border-radius: 12px;
       border: 1px solid rgba(212, 163, 89, 0.4);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85), 0 0 16px rgba(212, 163, 89, 0.15);
-      transition: opacity 0.3s ease;
+      transition: margin 0.35s ease, opacity 0.3s ease;
+      margin: 0 auto; /* CĂN GIỮA */
+    }
+
+    /* KHI LÀ BÍCH CHÂU -> ĐẨY SANG TRÁI */
+    .stage.align-left .character-portrait {
+      margin-left: 0;
+      margin-right: auto;
+    }
+
+    /* KHI LÀ GIAO THẦN -> ĐẨY SANG PHẢI */
+    .stage.align-right .character-portrait {
+      margin-left: auto;
+      margin-right: 0;
+    }
+
+    /* TRÊN ĐIỆN THOẠI (DƯỚI 768px): TẤT CẢ LUÔN Ở GIỮA */
+    @media (max-width: 768px) {
+      .stage {
+        top: 60px;
+        bottom: 52%;
+        padding: 0;
+        justify-content: center;
+        align-items: center;
+      }
+      .character-portrait,
+      .stage.align-left .character-portrait,
+      .stage.align-right .character-portrait {
+        margin: 0 auto !important;
+        max-width: 82%;
+        max-height: 90%;
+        height: auto;
+      }
     }
 
     /* HỘP THOẠI DIALOGUE DƯỚI CÙNG */
@@ -210,63 +258,95 @@
       bottom: 0;
       left: 0;
       right: 0;
-      padding: 24px 36px 28px;
+      height: 320px; /* Tăng chiều cao lên 320px để chứa hết văn bản dài */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 18px 36px 18px;
       background: var(--dialog-bg);
       border-top: 1px solid rgba(212, 163, 89, 0.3);
       backdrop-filter: blur(14px);
       z-index: 20;
       cursor: pointer;
     }
+
+    /* VÙNG CHỨA CHỮ: BỎ THANH CUỘN CHUỘT */
+    .dialogue-text {
+      color: var(--text);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      font-weight: 400;
+      overflow-y: hidden; /* Tắt thanh cuộn chuột hoàn toàn */
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* Căn nội dung cân đối ở giữa hộp thoại khi ít chữ */
+    }
+
+    .dialogue-text p { 
+      margin-bottom: 8px; 
+    }
+
+    .dialogue-text .dialogue {
+      border-left: 3px solid var(--gold);
+      margin: 8px 0;
+      color: #f6e8cc;
+      background: rgba(212, 163, 89, 0.05);
+      border-radius: 0 8px 8px 0;
+      padding: 8px 12px;
+      font-size: 0.98em;
+    }
+
     .char-badge {
       display: inline-block;
-      padding: 4px 14px;
+      padding: 3px 12px;
       border: 1px solid var(--gold);
       border-radius: 6px;
       color: var(--gold);
-      font-size: 0.95rem;
+      font-size: clamp(0.85rem, 2vw, 0.95rem);
       font-weight: 700;
       letter-spacing: 0.05em;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
       background: rgba(212, 163, 89, 0.1);
     }
     .chapter-tag {
       float: right;
-      font-size: 0.8rem;
+      font-size: clamp(0.7rem, 1.8vw, 0.8rem);
       color: var(--gold);
       border: 1px solid var(--gold-dim);
-      padding: 3px 10px;
+      padding: 2px 8px;
       border-radius: 99px;
     }
     .dialogue-text {
       color: var(--text);
-      font-size: 1.12rem;
-      line-height: 1.7;
+      font-size: clamp(0.95rem, 2.3vw, 1.1rem);
+      line-height: 1.6;
       font-weight: 400;
-      min-height: 4.5em;
     }
-    .dialogue-text p { margin-bottom: 8px; }
+    .dialogue-text p { margin-bottom: 6px; }
     .dialogue-text .dialogue {
       border-left: 3px solid var(--gold);
-      margin: 10px 0;
+      margin: 8px 0;
       color: #f6e8cc;
       background: rgba(212, 163, 89, 0.05);
       border-radius: 0 8px 8px 0;
-      padding: 6px 12px;
+      padding: 6px 10px;
+      font-size: 0.95em;
     }
 
     .dialogue-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 12px;
+      margin-top: 10px;
     }
     .hint-text {
-      font-size: 0.8rem;
+      font-size: clamp(0.72rem, 1.8vw, 0.8rem);
       color: var(--text-muted);
     }
     .next-arrow {
-      width: 32px;
-      height: 32px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       border: 1px solid rgba(255, 255, 255, 0.18);
       background: rgba(255, 255, 255, 0.05);
@@ -274,56 +354,102 @@
       align-items: center;
       justify-content: center;
       color: var(--gold);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       animation: pulse 1.6s infinite;
+      flex-shrink: 0;
     }
 
     /* OVERLAY MENU LỰA CHỌN RẼ NHÁNH */
     .choices-overlay {
       position: absolute;
       inset: 0;
-      background: rgba(3, 7, 12, 0.72);
+      background: rgba(3, 7, 12, 0.78);
       backdrop-filter: blur(8px);
       z-index: 30;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
+      padding: 16px;
+      overflow-y: auto;
     }
     .choice-card {
-      width: 80%;
+      width: 100%;
       max-width: 680px;
       background: rgba(14, 25, 36, 0.95);
       border: 1px solid rgba(212, 163, 89, 0.3);
-      padding: 16px 20px;
+      padding: 12px 16px;
       border-radius: 12px;
       color: #fff;
       cursor: pointer;
-      font-size: 1.02rem;
+      font-size: clamp(0.9rem, 2.2vw, 1rem);
       transition: all 0.22s ease;
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 12px;
     }
-    .choice-card:hover {
+    .choice-card:hover, .choice-card:active {
       border-color: var(--gold);
-      background: rgba(212, 163, 89, 0.16);
-      transform: translateX(8px);
+      background: rgba(212, 163, 89, 0.2);
+      transform: translateX(4px);
     }
     .choice-badge {
       font-family: 'Cinzel', serif;
       font-weight: 700;
       color: var(--gold);
       border: 1px solid var(--gold-dim);
-      padding: 4px 11px;
+      padding: 4px 10px;
       border-radius: 6px;
       flex-shrink: 0;
     }
     .choice-info strong { display: block; margin-bottom: 2px; }
-    .choice-info small { color: var(--text-muted); font-size: 0.88rem; display: block; }
+    .choice-info small { color: var(--text-muted); font-size: 0.84rem; display: block; }
 
     .hidden { display: none !important; }
+
+    /* CẤU HÌNH DÀNH RIÊNG CHO ĐIỆN THOẠI (DƯỚI 768px) */
+    @media (max-width: 768px) {
+      .vn-container {
+        border-radius: 0;
+        border: none;
+      }
+      .top-bar {
+        align-items: center;
+        background: linear-gradient(180deg, rgba(4, 9, 14, 0.9) 0%, transparent 100%);
+      }
+      .stats-card {
+        padding: 6px 10px;
+        gap: 4px;
+      }
+      .stat-row { width: auto; gap: 8px; font-size: 0.72rem; }
+      .control-actions { gap: 4px; }
+      .ctrl-btn { padding: 5px 8px; font-size: 0.72rem; }
+
+      /* Canh chỉnh ảnh minh họa lên nửa trên màn hình */
+      .stage {
+        justify-content: center;
+        align-items: center;
+        padding-right: 0;
+        padding-bottom: 38%;
+        top: 60px;
+      }
+      .character-portrait {
+        max-width: 82%;
+        max-height: 38vh;
+        border-radius: 10px;
+      }
+
+      /* Hộp thoại chiếm nửa dưới vừa vặn ngón tay cái */
+      .dialogue-wrapper {
+        max-height: 48%;
+        padding: 14px 16px;
+      }
+      .dialogue-text {
+        font-size: 0.95rem;
+        line-height: 1.55;
+      }
+    }
 
     @keyframes pulse {
       0%, 100% { transform: scale(1); opacity: 0.8; }
@@ -361,27 +487,27 @@
       </div>
 
       <div class="control-actions">
-        <button class="ctrl-btn" type="button" id="back-btn">← Quay Lại</button>
-        <button class="ctrl-btn" type="button" id="audio-toggle">🔊 Âm Thanh: Bật</button>
+        <button class="ctrl-btn" type="button" id="back-btn">← Lùi</button>
+        <button class="ctrl-btn" type="button" id="audio-toggle">🔊 Nhạc</button>
         <button class="ctrl-btn" type="button" id="fs-btn">⛶</button>
-        <button class="ctrl-btn" type="button" id="home-btn">↺ Trang Chủ</button>
+        <button class="ctrl-btn" type="button" id="home-btn">↺ Đầu</button>
       </div>
     </header>
 
     <!-- KHUNG ẢNH MINH HỌA -->
     <div class="stage">
-      <img id="char-img" class="character-portrait" src="./img/image.png" alt="Minh họa">
+      <img id="char-img" class="character-portrait" src="./img/giao_than.png" alt="Minh họa">
     </div>
 
     <!-- HỘP THOẠI DIALOGUE -->
     <div class="dialogue-wrapper" id="dialogue-box">
-      <div style="overflow: hidden;">
+      <div style="overflow: hidden; margin-bottom: 4px;">
         <div class="char-badge" id="speaker-name">Giao Thần</div>
         <span class="chapter-tag" id="chapter-name">Giai đoạn 1</span>
       </div>
       <div class="dialogue-text" id="dialogue-body"></div>
       <div class="dialogue-footer">
-        <span class="hint-text">Nhấn bất kỳ đâu để xem tiếp lựa chọn</span>
+        <span class="hint-text">Chạm vào hộp thoại để chọn tiếp</span>
         <div class="next-arrow">❯</div>
       </div>
     </div>
@@ -412,8 +538,8 @@
     let audioEnabled = true;
     let audioCtx = null;
 
-    // DANH SÁCH ẢNH (start trỏ vào thư mục ./img/image.png)
-const sceneImages = {
+    // DANH SÁCH ẢNH NỘI BỘ
+    const sceneImages = {
       start: "./img/giao_than.png",
       a1: "./img/bich_chau.png",
       a2: "./img/giao_than.png",
@@ -430,6 +556,7 @@ const sceneImages = {
       ending_bad: "./img/ending_bad.png",
       ending_sacrifice: "./img/ending_sacrifice.png"
     };
+
     // NỘI DUNG TẤT CẢ CÁC ĐOẠN PASSAGES VÀ HỘI THOẠI
     const passages = {
       start: {
@@ -476,7 +603,7 @@ const sceneImages = {
       b2: {
         stage: 2, chapter: "Giai đoạn 2 · Nhánh B", pill: "Đối diện", speaker: "Bích Châu & Giao Thần",
         title: "Thừa nhận trách nhiệm",
-        text: `<p>Bích Châu trở lại gặp Giao thần.</p><div class="dialogue"><p><strong>Bích Châu:</strong> “Con người đã có lỗi với biển cả. Nhưng trong dân làng vẫn có những người vô tộc. Xin ngài đừng để họ phải trả giá cho sai lầm của người khác.”</p><p>Giao thần im lặng. Lần đầu tiên, ngài nhận ra Bích Châu muốn hiểu nỗi đau của biển cả.</p></div>`,
+        text: `<p>Bích Châu trở lại gặp Giao thần.</p><div class="dialogue"><p><strong>Bích Châu:</strong> “Con người đã có lỗi với biển cả. Nhưng trong dân làng vẫn có những người vô tội. Xin ngài đừng để họ phải trả giá cho sai lầm của người khác.”</p><p>Giao thần im lặng. Lần đầu tiên, ngài nhận ra Bích Châu muốn hiểu nỗi đau của biển cả.</p></div>`,
         choices: [
           { title: "Thừa nhận lỗi lầm và cùng sửa chữa", desc: "Đưa ra giải pháp để con người khắc phục hậu quả.", label: "A", next: "stage3", action: () => { state.covenant = true; state.trust += 2; } },
           { title: "Yêu cầu chấm dứt trừng phạt", desc: "Nhấn mạnh rằng trừng phạt không thể khôi phục biển cả.", label: "B", next: "stage3", action: () => { state.trust += 1; } }
@@ -621,8 +748,19 @@ const sceneImages = {
       const passage = passages[passageId];
 
       // Đổi ảnh hiển thị
-      const imgSrc = sceneImages[passageId] || sceneImages.start;
-      document.getElementById("char-img").src = imgSrc;
+     const imgSrc = sceneImages[passageId] || sceneImages.start;
+      const charImg = document.getElementById("char-img");
+      const stageEl = document.querySelector(".stage");
+
+      charImg.src = imgSrc;
+
+      // Nếu cảnh này hiển thị ảnh Bích Châu thì chuyển sang bên trái
+      stageEl.classList.remove("align-left", "align-right");
+if (imgSrc.includes("bich_chau")) {
+        stageEl.classList.add("align-left");   // Bích Châu: BÊN TRÁI
+      } else if (imgSrc.includes("giao_than")) {
+        stageEl.classList.add("align-right");  // Giao Thần: BÊN PHẢI
+      }
 
       // Nội dung hội thoại
       document.getElementById("speaker-name").textContent = passage.speaker || "Giao Thần";
@@ -707,10 +845,10 @@ const sceneImages = {
     audioBtn.addEventListener("click", () => {
       audioEnabled = !audioEnabled;
       if (audioEnabled) {
-        audioBtn.textContent = "🔊 Âm Thanh: Bật";
+        audioBtn.textContent = "🔊 Nhạc";
         bgAudio.play().catch(() => {});
       } else {
-        audioBtn.textContent = "🔇 Âm Thanh: Tắt";
+        audioBtn.textContent = "🔇 Tắt";
         bgAudio.pause();
       }
     });
@@ -723,7 +861,7 @@ const sceneImages = {
       }
     });
 
-    // Khởi tạo trạng thái pips
+    // Khởi tạo trạng thái pips ban đầu
     renderPips();
   </script>
 </body>
