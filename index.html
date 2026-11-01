@@ -212,7 +212,7 @@
       width: auto;
       max-width: 460px;
       height: 100%;
-      max-height: 320px;
+      max-height: 310px;
       object-fit: cover;
       border-radius: 12px;
       border: 1px solid rgba(212, 163, 89, 0.4);
@@ -408,46 +408,86 @@
 
     .hidden { display: none !important; }
 
-    /* CẤU HÌNH DÀNH RIÊNG CHO ĐIỆN THOẠI (DƯỚI 768px) */
+  /* CẤU HÌNH DÀNH RIÊNG CHO ĐIỆN THOẠI (DƯỚI 768px) */
     @media (max-width: 768px) {
       .vn-container {
         border-radius: 0;
         border: none;
+        height: 100dvh;
       }
+
+      /* Thanh menu trên cùng: lề sát hơn, chữ gọn gàng */
       .top-bar {
+        padding: 10px 12px;
         align-items: center;
-        background: linear-gradient(180deg, rgba(4, 9, 14, 0.9) 0%, transparent 100%);
+        background: linear-gradient(180deg, rgba(4, 9, 14, 0.95) 0%, transparent 100%);
       }
       .stats-card {
         padding: 6px 10px;
         gap: 4px;
       }
-      .stat-row { width: auto; gap: 8px; font-size: 0.72rem; }
+      .stat-row { 
+        width: auto; 
+        gap: 8px; 
+        font-size: 0.72rem; 
+      }
+      .dots { gap: 3px; }
+      .dot { width: 6px; height: 6px; }
       .control-actions { gap: 4px; }
-      .ctrl-btn { padding: 5px 8px; font-size: 0.72rem; }
+      .ctrl-btn { 
+        padding: 5px 7px; 
+        font-size: 0.7rem; 
+      }
 
-      /* Canh chỉnh ảnh minh họa lên nửa trên màn hình */
+      /* KHU VỰC ẢNH: Chiếm trọn nửa trên từ sau top-bar tới sát hộp thoại */
       .stage {
-        justify-content: center;
+        top: 75px;        /* Cách top-bar không bị đè */
+        bottom: 46%;      /* Đáy ảnh bám sát mép trên hộp thoại */
+        padding: 8px 16px 12px 16px;
+        justify-content: center !important;
         align-items: center;
-        padding-right: 0;
-        padding-bottom: 38%;
-        top: 60px;
-      }
-      .character-portrait {
-        max-width: 82%;
-        max-height: 38vh;
-        border-radius: 10px;
       }
 
-      /* Hộp thoại chiếm nửa dưới vừa vặn ngón tay cái */
+      /* ẢNH MINH HỌA: To, rõ, tỉ lệ 4:3 đẹp mắt */
+      .character-portrait,
+      .stage.align-left .character-portrait,
+      .stage.align-right .character-portrait {
+        margin: 0 auto !important;
+        width: 100%;
+        max-width: 320px;   /* Chiều rộng lý tưởng cho màn hình điện thoại */
+        height: 100%;
+        max-height: 230px;  /* Đủ lớn, không bị co bé thành con tem */
+        object-fit: cover;
+        border-radius: 12px;
+      }
+
+      /* HỘP THOẠI DƯỚI CÙNG: Chiếm 46% màn hình dưới, vừa vặn ngón cái */
       .dialogue-wrapper {
-        max-height: 48%;
-        padding: 14px 16px;
+        height: 46%;
+        padding: 14px 16px 16px 16px;
+      }
+      .char-badge {
+        font-size: 0.85rem;
+        padding: 3px 10px;
+        margin-bottom: 6px;
+      }
+      .chapter-tag {
+        font-size: 0.72rem;
+        padding: 2px 7px;
       }
       .dialogue-text {
         font-size: 0.95rem;
         line-height: 1.55;
+        overflow-y: auto;   /* Nếu gặp đoạn mở đầu dài thì vuốt nhẹ đọc tiếp */
+        justify-content: flex-start; /* Chữ bắt đầu từ trên xuống */
+      }
+      .dialogue-text p {
+        margin-bottom: 6px;
+      }
+      .dialogue-text .dialogue {
+        margin: 6px 0;
+        padding: 6px 10px;
+        font-size: 0.92rem;
       }
     }
 
